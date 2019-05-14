@@ -6,12 +6,26 @@ import java.sql.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class TaxJdbcImpl implements TaxJdbc{
+public class TaxJdbcImpl implements TaxJdbc {
     private static Connection connection;
     private static PreparedStatement preparedStatement;
-
+    private static volatile TaxJdbcImpl taxJdbc = null;
     private ResourceBundle resourceBundle = ResourceBundle.getBundle("message",
             new Locale("en", "GB"));
+
+    private TaxJdbcImpl() {
+    }
+
+    public static TaxJdbcImpl getInstance() {
+        if (taxJdbc == null) {
+            synchronized (TaxJdbcImpl.class) {
+                if (taxJdbc == null) {
+                    taxJdbc = new TaxJdbcImpl();
+                }
+            }
+        }
+        return new TaxJdbcImpl();
+    }
 
     public Connection connectToDb() {
         connection = null;

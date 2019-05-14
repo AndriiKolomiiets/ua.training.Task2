@@ -11,7 +11,7 @@ import java.io.IOException;
 public class TaxDeclarationService implements TaxDeclaration {
 
     public TaxPayer getTaxPayerInfoFromDb(TaxPayer payer, int taxId) {
-        TaxJdbc jdbc = new TaxJdbcImpl();
+        TaxJdbc jdbc = TaxJdbcImpl.getInstance();
         jdbc.getUserDataFromDb(payer, taxId);
         return payer;
     }

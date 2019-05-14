@@ -18,7 +18,7 @@ public class ViewTaxDeclarationServlet extends HttpServlet {
     public void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         TaxDeclaration declare = new TaxDeclarationService();
         TaxPayer payer = new TaxPayer();
-        TaxJdbc jdbc = new TaxJdbcImpl();
+        TaxJdbc jdbc = TaxJdbcImpl.getInstance();
         ResourceBundle resourceBundle;
 
         int taxId = Integer.parseInt(httpServletRequest.getParameter("ti"));

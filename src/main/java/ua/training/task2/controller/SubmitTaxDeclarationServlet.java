@@ -15,13 +15,13 @@ import java.util.ResourceBundle;
 public class SubmitTaxDeclarationServlet extends HttpServlet {
     private TaxDeclaration declare = new TaxDeclarationService();
     private TaxPayer payer = new TaxPayer();
-    private TaxJdbc jdbc = new TaxJdbcImpl();
+    private TaxJdbc jdbc = TaxJdbcImpl.getInstance();
 
     public void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws IOException {
         String language = httpServletRequest.getParameter("language");
         ResourceBundle resourceBundle;
-        if (language == "uk_UA") {
+        if (language.equals("uk_UA")) {
             resourceBundle = ResourceBundle.getBundle("message_uk_UA",
                     new Locale("uk", "UA"));
         } else {
