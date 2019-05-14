@@ -16,6 +16,7 @@ public class TaxPayer {
     private int foreignMoneyTransactionsAmount;
     private int benefitsAmount;
     private int financialAssistanceAmount;
+
     private int declarationDate;
 
     public void setPropertySalesAmount(int propertySellingAmount) {
