@@ -1,5 +1,7 @@
 package ua.training.task2.controller;
 
+import ua.training.task2.model.JdbcDao;
+import ua.training.task2.model.TaxJdbcDao;
 import ua.training.task2.model.pojo.TaxPayer;
 import ua.training.task2.model.service.TaxDeclaration;
 import ua.training.task2.model.service.TaxDeclarationService;
@@ -14,20 +16,24 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ViewTaxDeclarationServlet extends HttpServlet {
-
+    //todo: sort, find, sum
     public void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        long income;
+        double taxes;
+        Locale locale;
+        String language;
+        int taxId;
         TaxDeclaration declare = new TaxDeclarationService();
         TaxPayer payer = new TaxPayer();
-        TaxJdbc jdbc = TaxJdbcImpl.getInstance();
+        JdbcDao jdbc = TaxJdbcDao.getInstance();
         ResourceBundle resourceBundle;
 
-        int taxId = Integer.parseInt(httpServletRequest.getParameter("ti"));
+        taxId = Integer.parseInt(httpServletRequest.getParameter("ti"));
         jdbc.getUserDataFromDb(payer, taxId);
-        long income = declare.countEntireIncome(payer);
-        double taxes = declare.getTaxes(payer);
-
-        Locale locale = httpServletRequest.getLocale();
-        String language = locale.getLanguage();
+        income = declare.countEntireIncome(payer);
+        taxes = declare.getTaxes(payer);
+        locale = httpServletRequest.getLocale();
+        language = locale.getLanguage();
 
 //todo: change language choosing
         if (language.equals("uk")) {
@@ -46,20 +52,20 @@ public class ViewTaxDeclarationServlet extends HttpServlet {
                 "<br>" +
                 "<body> <fieldset><h2  align=\"center\">" + resourceBundle.getString("view.body") + " </h2>" +
                 "<div align=\"center\">" +
-                resourceBundle.getString("view.name") + payer.getFirstName() +
-                "<br>" + resourceBundle.getString("declaration.lastName") + payer.getLastName() +
-                "<br>" + resourceBundle.getString("declaration.taxCategory") + payer.getTaxCategory() +
-                "<br>" + resourceBundle.getString("declaration.taxId") + payer.getTaxId() +
-                "<br>" + resourceBundle.getString("declaration.regJobIncome") + payer.getPrimaryJobIncomeAmount() +
-                "<br>" + resourceBundle.getString("declaration.extraJobIncome") + payer.getExtraJobIncomeAmount() +
-                "<br>" + resourceBundle.getString("declaration.annualBonus") + payer.getAnnualBonusAmount() +
-                "<br>" + resourceBundle.getString("declaration.foreignTransactions") + payer.getForeignMoneyTransactionsAmount() +
-                "<br>" + resourceBundle.getString("declaration.giftedMoney") + payer.getMoneyGotAsGiftAmount() +
-                "<br>" + resourceBundle.getString("declaration.giftedProperty") + payer.getPropertyGotAsGiftAmount() +
-                "<br>" + resourceBundle.getString("declaration.propertySales") + payer.getPropertySalesAmount() +
-                "<br>" + resourceBundle.getString("declaration.benefits") + payer.getBenefitsAmount() +
-                "<br>" + resourceBundle.getString("declaration.financialAssistance") + payer.getFinancialAssistanceAmount() +
-                "<br>" + resourceBundle.getString("declaration.declarationYear") + payer.getDeclarationDate() +
+                resourceBundle.getString("view.name") + payer.getUser().getFirstName() +
+                "<br>" + resourceBundle.getString("declaration.lastName") + payer.getUser().getLastName() +
+                "<br>" + resourceBundle.getString("declaration.taxCategory") + payer.getTaxIdentification().getTaxCategory() +
+                "<br>" + resourceBundle.getString("declaration.taxId") + payer.getTaxIdentification().getTaxId() +
+                "<br>" + resourceBundle.getString("declaration.regJobIncome") + payer.getIncomeValueByType("Regular job income") +
+                "<br>" + resourceBundle.getString("declaration.extraJobIncome") + payer.getIncomeValueByType("Extra job income") +
+                "<br>" + resourceBundle.getString("declaration.annualBonus") + payer.getIncomeValueByType("Annual bonus") +
+                "<br>" + resourceBundle.getString("declaration.foreignTransactions") + payer.getIncomeValueByType("Foreign transaction") +
+                "<br>" + resourceBundle.getString("declaration.giftedMoney") + payer.getIncomeValueByType("Money got as a gift") +
+                "<br>" + resourceBundle.getString("declaration.giftedProperty") + payer.getIncomeValueByType("Property got as a gift") +
+                "<br>" + resourceBundle.getString("declaration.propertySales") + payer.getIncomeValueByType("Property sales") +
+                "<br>" + resourceBundle.getString("declaration.benefits") + payer.getIncomeValueByType("Benefits") +
+                "<br>" + resourceBundle.getString("declaration.financialAssistance") + payer.getIncomeValueByType("Financial assistance") +
+                "<br>" + /*resourceBundle.getString("declaration.declarationYear") + payer.getDeclarationDate() +*/
                 "<br>" +
                 "<br>" +
                 "<br>" +

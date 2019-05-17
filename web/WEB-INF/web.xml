@@ -27,7 +27,6 @@
         <url-pattern>/TaxDeclarationFilling/</url-pattern>
     </servlet-mapping>
 
-    //get taxes by id
     <servlet>
         <servlet-name>TaxDeclarationCheck</servlet-name>
         <jsp-file>/declaration_check.jsp</jsp-file>
