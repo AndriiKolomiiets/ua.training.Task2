@@ -2,7 +2,6 @@ package ua.training.task2.model;
 
 import ua.training.task2.model.pojo.*;
 import ua.training.task2.model.pojo.income.*;
-import ua.training.task2.model.pojo.income.ExtraJobIncome;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -159,7 +158,7 @@ public class TaxJdbcDao implements JdbcDao {
                 user.setFirstName(rs.getString("fname"));
                 user.setLastName(rs.getString("lname"));
                 taxPayer.setUser(user);
-                taxPayer.setIncome(new PrimaryJobIncome(rs.getInt("regular_job")));
+                taxPayer.addIncomeToList(new IncomeImpl(rs.getInt("regular_job"), "Regular job income"));
             }
 
         } catch (
