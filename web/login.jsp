@@ -46,6 +46,10 @@
             <button type="button" class="choose_button" id="slide_stop_button" >
                 <fmt:message key="index.button.getInfoById"/></button>
         </a>
+        <a href="http://localhost:8080/admin/">
+            <button type="button" class="choose_button" id="admin_page_button" >
+                <fmt:message key="index.button.toadminpage"/></button>
+        </a>
     </div>
 </div>
 

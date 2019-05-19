@@ -15,8 +15,8 @@ import java.io.PrintWriter;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class ViewTaxDeclarationServlet extends HttpServlet {
-    //todo: sort, find, sum
+public class AdminStatisticServlet extends HttpServlet {
+
     public void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         long income;
         double taxes;
@@ -44,7 +44,8 @@ public class ViewTaxDeclarationServlet extends HttpServlet {
                     new Locale("en", "GB"));
         }
 
-        httpServletResponse.setContentType("text/html; charset=UTF-8");
+
+        /*httpServletResponse.setContentType("text/html; charset=UTF-8");
         PrintWriter writer = httpServletResponse.getWriter();
         writer.println("<html>" +
                 "<head><title>" + resourceBundle.getString("check.header") + "</title></head>\n" +
@@ -52,6 +53,12 @@ public class ViewTaxDeclarationServlet extends HttpServlet {
                 "<br>" +
                 "<body> <fieldset><h2  align=\"center\">" + resourceBundle.getString("view.body") + " </h2>" +
                 "<div align=\"center\">" +
+
+                "<c:forEach items="${listOfParams}" var="element">
+  <tr>
+    <td>${element.FirstName}</td>
+    <td>${element.LastName}</td>  </tr>
+</c:forEach>"+
                 resourceBundle.getString("view.name") + payer.getUser().getFirstName() +
                 "<br>" + resourceBundle.getString("declaration.lastName") + payer.getUser().getLastName() +
                 "<br>" + resourceBundle.getString("declaration.taxCategory") + payer.getTaxIdentification().getTaxCategory() +
@@ -65,7 +72,7 @@ public class ViewTaxDeclarationServlet extends HttpServlet {
                 "<br>" + resourceBundle.getString("declaration.propertySales") + payer.getIncomeValueByType("Property sales") +
                 "<br>" + resourceBundle.getString("declaration.benefits") + payer.getIncomeValueByType("Benefits") +
                 "<br>" + resourceBundle.getString("declaration.financialAssistance") + payer.getIncomeValueByType("Financial assistance") +
-                "<br>" + /*resourceBundle.getString("declaration.declarationYear") + payer.getDeclarationDate() +*/
+                "<br>" + *//*resourceBundle.getString("declaration.declarationYear") + payer.getDeclarationDate() +*//*
                 "<br>" +
                 "<br>" +
                 "<br>" +
@@ -73,10 +80,5 @@ public class ViewTaxDeclarationServlet extends HttpServlet {
                 "<br>" +
                 "<h2>" + resourceBundle.getString("view.taxes") + taxes + "</h2>"
                 + "</fieldset></body>" +
-                "</html>");
-    }
-
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-    }
-}
+                "</html>");*/
+}}

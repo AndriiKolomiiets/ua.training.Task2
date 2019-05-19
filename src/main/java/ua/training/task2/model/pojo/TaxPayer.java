@@ -1,156 +1,105 @@
 package ua.training.task2.model.pojo;
 
+import ua.training.task2.model.pojo.income.Income;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class TaxPayer {
+    //todo: User, Work, Property, Identification
+    private User user;
+    private TaxIdentification taxIdentification;
+    private Income income;
+    private List<Income> incomeList;
 
-    private String firstName;
-    private String lastName;
-    private int taxId;
-    private String taxCategory;
-    //income
-    private int primaryJobIncomeAmount;
-    private int extraJobIncomeAmount;
-    private int annualBonusAmount;
-    private int propertySellingAmount;
-    private int moneyGotAsGiftAmount;
-    private int propertyGotAsGiftAmount;
-    private int foreignMoneyTransactionsAmount;
-    private int benefitsAmount;
-    private int financialAssistanceAmount;
-
-    private int declarationDate;
-
-    public void setPropertySalesAmount(int propertySellingAmount) {
-        this.propertySellingAmount = propertySellingAmount;
+    public void setIncome(Income income) {
+        this.income = income;
     }
 
-    public int getDeclarationDate() {
-        return declarationDate;
+    public List<Income> getIncomeList() {
+        return incomeList;
     }
 
-    public void setDeclarationDate(int declarationDate) {
-        this.declarationDate = declarationDate;
+    public void addIncomeToList(Income income) {
+        incomeList.add(income);
     }
 
-    public String getFirstName() {
-        return firstName;
+    public boolean removeIncomeFromList(Income income) {
+        return incomeList.remove(income);
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public Income getIncome(int index) {
+        return incomeList.get(index);
     }
 
-    public String getLastName() {
-        return lastName;
+    public TaxPayer() {
+        this.user = new UserImpl();
+        this.taxIdentification = new TaxIdentificationImpl();
+        incomeList = new ArrayList();
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public TaxPayer(User user, TaxIdentification taxIdentification) {
+        this.user = user;
+        this.taxIdentification = taxIdentification;
+        incomeList = new ArrayList();
     }
 
-    public int getTaxId() {
-        return taxId;
+
+    public int getIncomeValueByType(String type) {
+        for (int i=0; i<incomeList.size();i++){
+            if (incomeList.get(i).getIncomeType()==type){
+               return incomeList.get(i).getAmount();
+            }
+        }
+        return 0;
+
+      /*  return incomeList.stream().filter(a -> type.equals(income.getIncomeType()))
+                .findAny()
+                .map(income -> income.getAmount())
+                .get();*/
     }
 
-    public void setTaxId(int taxId) {
-        this.taxId = taxId;
+    public User getUser() {
+        return user;
     }
 
-    public String getTaxCategory() {
-        return taxCategory;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setTaxCategory(String taxCategory) {
-        this.taxCategory = taxCategory;
+    public TaxIdentification getTaxIdentification() {
+        return taxIdentification;
     }
 
-    public int getPrimaryJobIncomeAmount() {
-        return primaryJobIncomeAmount;
+    public void setTaxIdentification(TaxIdentification taxIdentification) {
+        this.taxIdentification = taxIdentification;
     }
 
-    public void setPrimeJobIncomeAmount(int primaryJobIncomeAmount) {
-        this.primaryJobIncomeAmount = primaryJobIncomeAmount;
-    }
-
-    public int getExtraJobIncomeAmount() {
-        return extraJobIncomeAmount;
-    }
-
-    public void setExtraJobIncomeAmount(int extraJobIncomeAmount) {
-        this.extraJobIncomeAmount = extraJobIncomeAmount;
-    }
-
-    public int getAnnualBonusAmount() {
-        return annualBonusAmount;
-    }
-
-    public void setAnnualBonusAmount(int annualBonusAmount) {
-        this.annualBonusAmount = annualBonusAmount;
-    }
-
-    public int getPropertySalesAmount() {
-        return propertySellingAmount;
-    }
-
-    public void setPropertySellsAmount(int propertySellingAmount) {
-        this.propertySellingAmount = propertySellingAmount;
-    }
-
-    public int getMoneyGotAsGiftAmount() {
-        return moneyGotAsGiftAmount;
-    }
-
-    public void setMoneyGotAsGiftAmount(int moneyGotAsGiftAmount) {
-        this.moneyGotAsGiftAmount = moneyGotAsGiftAmount;
-    }
-
-    public int getPropertyGotAsGiftAmount() {
-        return propertyGotAsGiftAmount;
-    }
-
-    public void setPropertyGotAsGiftAmount(int propertyGotAsGiftAmount) {
-        this.propertyGotAsGiftAmount = propertyGotAsGiftAmount;
-    }
-
-    public int getForeignMoneyTransactionsAmount() {
-        return foreignMoneyTransactionsAmount;
-    }
-
-    public void setForeignMoneyTransactionsAmount(int foreignMoneyTransactionsAmount) {
-        this.foreignMoneyTransactionsAmount = foreignMoneyTransactionsAmount;
-    }
-
-    public int getBenefitsAmount() {
-        return benefitsAmount;
-    }
-
-    public void setBenefitsAmount(int benefitsAmount) {
-        this.benefitsAmount = benefitsAmount;
-    }
-
-    public int getFinancialAssistanceAmount() {
-        return financialAssistanceAmount;
-    }
-
-    public void setFinancialAssistanceAmount(int financialAssistanceAmount) {
-        this.financialAssistanceAmount = financialAssistanceAmount;
-    }
 
     @Override
-    public String toString(){
-        return "Tax ID: " + getTaxId()+
-                "\nTax taxcategory: " + getTaxCategory() +
-                "\nName: " + getFirstName() +
-                "\nLast Name: " + getLastName() +
-                "\nPrimary job income: " + getPrimaryJobIncomeAmount() +
-                "\nExtra job income: " + getExtraJobIncomeAmount() +
-                "\nAnnual bonus: " + getAnnualBonusAmount() +
-                "\nForeign transactions: " + getForeignMoneyTransactionsAmount() +
-                "\nMoney got as a gift: " + getMoneyGotAsGiftAmount() +
-                "\nProperty got as a gift: " +getPropertyGotAsGiftAmount() +
-                "\nSold property: " + getPropertySalesAmount() +
-                "\nBenefits: " + getBenefitsAmount() +
-                "\nFinancial assistance: " + getFinancialAssistanceAmount() +
-                "\nYear of declaration: " + getDeclarationDate();
+    public String toString() {
+        incomeList.stream()
+                .map(e -> (e.getIncomeType() + ": " + e.getAmount()))
+                .collect(Collectors.toList());
+        return "Tax ID: " + taxIdentification.getTaxId() +
+                "\nTax taxcategory: " + taxIdentification.getTaxCategory() +
+                "\nName: " + user.getFirstName() +
+                "\nLast Name: " + user.getLastName() +
+                "\n" + getIncomeValueByType("Regular job income");
+//                        incomeList.forEach(income ->System.out.println(income));
+
+
+//                "\nPrimary job income: " + incomeList.getPrimaryJobIncomeAmount() +
+//                "\nExtra job income: " + getExtraJobIncomeAmount() +
+//                "\nAnnual bonus: " + getAnnualBonusAmount() +
+//                "\nForeign transactions: " + getForeignMoneyTransactionsAmount() +
+//                "\nMoney got as a gift: " + getMoneyGotAsGiftAmount() +
+//                "\nProperty got as a gift: " + getPropertyGotAsGiftAmount() +
+//                "\nSold property: " + getPropertySalesAmount() +
+//                "\nBenefits: " + getBenefitsAmount() +
+//                "\nFinancial assistance: " + getFinancialAssistanceAmount() +
+//                "\nYear of declaration: " + getDeclarationDate();
 
 
     }
