@@ -17,7 +17,7 @@
 
 </head>
 
-<body>
+
 <br>
 <br>
 <form>
@@ -34,24 +34,62 @@
 <br>
 <br>
 <div align="center">
-    <form id="declaration_fill" action="http://localhost:8080/admin_stat_servlet/">
-        <fmt:message key="declaration.taxId"/>
-        <input type="text" name="ti" pattern="[0-9]{8}"/><br>
-        <br>
-        <div align="center">
-            <input type="submit" class="sub_button" value=<fmt:message key="check.submitButton"/>>
-            <input type="reset" class="sub_button" value=<fmt:message key="check.refreshButton"/>>
-        </div>
-    </form>
-</div>
-    <div align="center">
-    <form id="all_payers_stat" action="http://localhost:8080/all_payers_servlet/">
-        <div align="center">
-            <fmt:message key="admin.getallpayers"/>
-            <input type="submit" class="sub_button" value=<fmt:message key="admin.button.getallpayers"/>>
+    <fieldset class="flex-container" style="width: 600px; height: 100px;">
 
+        <form id="all_payers_stat" class="admin_form" action="http://localhost:8080/all_payers_servlet/">
+            <div align="center">
+                <h3><fmt:message key="admin.getallpayers"/></h3>
+                <input type="submit" class="sub_button" value=<fmt:message key="admin.button.getallpayers"/>>
+
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+<br>
+<div align="center">
+    <fieldset class="flex-container" style="width: 600px; height: 100px;">
+        <div align="center">
+            <form class="admin_form" action="http://localhost:8080/biggest_income_servlet/">
+                <div align="center">
+                    <h3><fmt:message key="admin.getbiggestincome"/></h3>
+                    <input type="submit" class="sub_button" value=<fmt:message key="admin.button.getallpayers"/>>
+
+                </div>
+            </form>
         </div>
-    </form>
+    </fieldset>
+</div>
+<br>
+<div align="center">
+    <fieldset class="flex-container" style="width: 600px; height: 180px;">
+
+        <form name="condition_form" class="admin_form" action="http://localhost:8080/salary_condition_servlet/"
+              onsubmit="return validateForm()">
+            <h3><fmt:message key="admin.payersbycondition"/></h3>
+            <br>
+            <fmt:message key="admin.conditions.min"/>
+            <input type="number" name="min" pattern="[0-9]{1,8}"/><br>
+            <fmt:message key="admin.conditions.max"/>
+            <input type="number" name="max" pattern="[0-9]{1,8}"/><br>
+            <br>
+            <div align="center">
+                <input type="submit" class="sub_button" value=<fmt:message key="check.submitButton"/>>
+                <input type="reset" class="sub_button" value=<fmt:message key="check.refreshButton"/>>
+            </div>
+        </form>
+        <script>function validateForm() {
+            var min = document.forms["condition_form"]["min"].value;
+            var max = document.forms["condition_form"]["max"].value;
+            if (min > max) {
+                //todo: <%--<fmt:message key="admin.validation.message"/>--%>
+                alert(" no no no");
+                return false;
+            }
+        }  </script>
+
+    </fieldset>
 </div>
 </body>
+
 </html>

@@ -4,6 +4,13 @@ public class UserImpl implements User{
     private String firstName;
     private String lastName;
 
+    public UserImpl (){}
+
+    public UserImpl(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public String getFirstName() {
         return firstName;
     }

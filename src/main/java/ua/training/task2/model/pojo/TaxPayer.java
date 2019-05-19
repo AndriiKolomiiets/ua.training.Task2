@@ -2,6 +2,7 @@ package ua.training.task2.model.pojo;
 
 import ua.training.task2.model.pojo.income.Income;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +46,20 @@ public class TaxPayer {
         incomeList = new ArrayList();
     }
 
+    public TaxPayer(User user, TaxIdentification taxIdentification, List<Income> incomeList) {
+        this.user = user;
+        this.taxIdentification = taxIdentification;
+        this.incomeList = incomeList;
+    }
+
+    public TaxPayer(User user, TaxIdentification taxIdentification, Income income) {
+        this.user = user;
+        this.taxIdentification = taxIdentification;
+        this.income = income;
+        this.incomeList = new ArrayList<>();
+        this.incomeList.add(income);
+    }
+
 
     public int getIncomeValueByType(String type) {
         for (int i=0; i<incomeList.size();i++){
@@ -83,10 +98,9 @@ public class TaxPayer {
                 .map(e -> (e.getIncomeType() + ": " + e.getAmount()))
                 .collect(Collectors.toList());
         return "Tax ID: " + taxIdentification.getTaxId() +
-                "\nTax taxcategory: " + taxIdentification.getTaxCategory() +
+                "\nTax category: " + taxIdentification.getTaxCategory() +
                 "\nName: " + user.getFirstName() +
-                "\nLast Name: " + user.getLastName() +
-                "\n" + getIncomeValueByType("Regular job income");
+                "\nLast Name: " + user.getLastName() ;
 //                        incomeList.forEach(income ->System.out.println(income));
 
 

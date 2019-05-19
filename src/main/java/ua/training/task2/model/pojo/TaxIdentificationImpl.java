@@ -4,6 +4,14 @@ public class TaxIdentificationImpl implements TaxIdentification {
     private int taxId;
     private String taxCategory;
 
+    public TaxIdentificationImpl() {
+    }
+
+    public TaxIdentificationImpl(int taxId, String taxCategory) {
+        this.taxId = taxId;
+        this.taxCategory = taxCategory;
+    }
+
     public int getTaxId() {
         return taxId;
     }

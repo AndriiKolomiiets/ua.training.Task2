@@ -78,6 +78,25 @@
         <url-pattern>/all_payers_servlet/</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SalaryConditionServlet</servlet-name>
+        <servlet-class>ua.training.task2.controller.SalaryConditionServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SalaryConditionServlet</servlet-name>
+        <url-pattern>/salary_condition_servlet/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>BiggestIncomeServlet</servlet-name>
+        <servlet-class>ua.training.task2.controller.SalaryConditionServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BiggestIncomeServlet</servlet-name>
+        <url-pattern>/biggest_income_servlet/</url-pattern>
+    </servlet-mapping>
 
 
     <welcome-file-list>

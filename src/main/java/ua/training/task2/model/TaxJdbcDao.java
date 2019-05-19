@@ -95,14 +95,13 @@ public class TaxJdbcDao implements JdbcDao {
 
     public List<TaxPayer> getAllTaxPayersFromDB() {
         List<TaxPayer> payers = new ArrayList<>();
-        User user = new UserImpl();
-        TaxIdentification taxIdentification = new TaxIdentificationImpl();
 
         try {
             connection = connectToDb();
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT DISTINCT fname, lname, taxid, tcategory FROM user_info, declaration");
-            getTaxPayerAndAddToList(payers, user, taxIdentification, rs);
+            payers = getTaxPayerAndAddToList(payers, rs);
+            System.out.println(payers);
 
         } catch (
                 SQLException e)
@@ -115,16 +114,21 @@ public class TaxJdbcDao implements JdbcDao {
 
     public List<TaxPayer> getTaxPayersByCondition(String field, int min, int max) {
         List<TaxPayer> payers = new ArrayList<>();
-        User user = new UserImpl();
-        TaxIdentification taxIdentification = new TaxIdentificationImpl();
-
         try {
             connection = connectToDb();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT DISTINCT fname, lname, taxid, tcategory " +
-                    "FROM user_info, declaration WHERE " + field + " BETWEEN " + min + " AND " + max);
-            getTaxPayerAndAddToList(payers, user, taxIdentification, rs);
+            ResultSet rs = statement.executeQuery("SELECT DISTINCT fname, lname, taxid, tcategory, regular_job " +
+                    "FROM user_info INNER JOIN declaration d on user_info.taxid = d.tax_id WHERE " + field + " BETWEEN " + min + " AND " + max);
+            while (rs.next()) {
+                System.out.println( rs.getString("fname")+" " +rs.getString("lname")
+                        +  " " + rs.getInt("taxid")+" " +rs.getString("tcategory")+" "+rs.getInt("regular_job")  );
+                payers.add(new TaxPayer(
+                        new UserImpl(rs.getString("fname"), rs.getString("lname")),
+                        new TaxIdentificationImpl(rs.getInt("taxid"), rs.getString("tcategory")),
+                        new IncomeImpl(rs.getInt("regular_job"), field)));
 
+            }
+            System.out.println(payers);
         } catch (
                 SQLException e)
 
@@ -134,36 +138,42 @@ public class TaxJdbcDao implements JdbcDao {
         return payers;
     }
 
-    private void getTaxPayerAndAddToList(List<TaxPayer> payers, User user, TaxIdentification taxIdentification, ResultSet rs) throws SQLException {
-        while (rs.next()) {
-            user.setFirstName(rs.getString("fname"));
-            user.setLastName(rs.getString("lname"));
-            taxIdentification.setTaxId(rs.getInt("taxid"));
-            taxIdentification.setTaxCategory(rs.getString("tcategory"));
+    private List<TaxPayer> getTaxPayerAndAddToList(List<TaxPayer> payers, ResultSet rs) throws SQLException {
 
-            TaxPayer taxPayer = new TaxPayer(user, taxIdentification);
-            payers.add(taxPayer);
+        while (rs.next()) {
+            payers.add(new TaxPayer(
+                    new UserImpl(rs.getString("fname"), rs.getString("lname")),
+                    new TaxIdentificationImpl(rs.getInt("taxid"), rs.getString("tcategory"))));
         }
+        return payers;
     }
 
     public TaxPayer getPayerWithBiggestRegularIncome() {
-        User user = new UserImpl();
         TaxPayer taxPayer = new TaxPayer();
 
         try {
             connection = connectToDb();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT DISTINCT fname, lname, regular_job FROM user_info, declaration WHERE MAX(regular_job)");
-            while (rs.next()) {
-                user.setFirstName(rs.getString("fname"));
-                user.setLastName(rs.getString("lname"));
-                taxPayer.setUser(user);
-                taxPayer.addIncomeToList(new IncomeImpl(rs.getInt("regular_job"), "Regular job income"));
-            }
+            ResultSet rs = statement.executeQuery("SELECT DISTINCT MAX(regular_job), fname, lname, taxid, tcategory " +
+                    "FROM user_info INNER JOIN declaration d on user_info.taxid = d.tax_id");
 
+
+
+
+
+
+
+            while (rs.next()) {
+                System.out.println(rs.getString(rs.getString("fname") + " "+ rs.getString("lname"))
+                        + " " +rs.getInt("taxid") + " " + rs.getString("tcategory")+ " "
+                        +rs.getInt("regular_job"));
+                return new TaxPayer(
+                        new UserImpl(rs.getString("fname"), rs.getString("lname")),
+                        new TaxIdentificationImpl(rs.getInt("taxid"), rs.getString("tcategory")),
+                        new IncomeImpl(rs.getInt("regular_job"), "regular_job"));
+            }
         } catch (
                 SQLException e)
-
         {
             System.out.println(e.getMessage());
         }

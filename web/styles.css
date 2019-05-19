@@ -33,6 +33,17 @@ p {
     margin-left : 25%
 }
 
+.flex-container {
+    display: block
+}
+
+.admin_form {
+    display: table-cell;
+    text-align: center;
+    width: 50%;
+    margin-left : 25%
+}
+
 .top-section {
     height: 100%;
 }

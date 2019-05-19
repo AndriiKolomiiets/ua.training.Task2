@@ -10,6 +10,6 @@ public class AllTaxPayersService {
     public List<TaxPayer> getAllPayers(){
         JdbcDao jdbcDao= TaxJdbcDao.getInstance();
 
-        return ((TaxJdbcDao) jdbcDao).getAllTaxPayersFromDB();
+        return jdbcDao.getAllTaxPayersFromDB();
     }
 }

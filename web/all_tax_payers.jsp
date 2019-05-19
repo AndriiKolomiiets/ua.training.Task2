@@ -10,7 +10,7 @@
        scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="message"/>
-<% List allPayersList = (List)session.getAttribute("allPayersList");%>
+<%--<% List allPayersList = (List)session.getAttribute("allPayersList");%>--%>
 
 <link rel="stylesheet" type="text/css" href="styles.css">
 
@@ -35,22 +35,21 @@
     </select></h3>
 </form>
 <br>
-<h1 align="center" style="color:#0000cb"><fmt:message key="admin.header"/></h1>
-<br>
+<fieldset>
+<h1 align="center" style="color:#0000cb"><fmt:message key="alltaxpayers.header"/></h1>
 <br>
 <div align="center">
 
-    <h1>Displaying Student List</h1>
     <table border ="1" width="500" align="center">
         <tr bgcolor="00FF7F">
-            <th><b>Student Name</b></th>
-            <th><b>Student Age</b></th>
-            <th><b>Course Undertaken</b></th>
+            <th><b>First Name</b></th>
+            <th><b>Last Name</b></th>
+            <th><b>Tax ID</b></th>
+            <th><b>Tax Category</b></th>
         </tr>
         <%List<TaxPayer> payers =
                 (ArrayList<TaxPayer>)request.getAttribute("allPayersList");
-            for(TaxPayer payer:payers){
-        int i=0;%>
+            for(TaxPayer payer:payers){%>
         <%-- Arranging data in tabular form
         --%>
         <tr>
@@ -58,9 +57,9 @@
             <td><%=payer.getUser().getLastName()%></td>
             <td><%=payer.getTaxIdentification().getTaxId()%></td>
             <td><%=payer.getTaxIdentification().getTaxCategory()%></td>
-            <%--<td><%=payer.getIncomeList().get(i).getAmount()%></td>--%>
+           <%-- <td><%=payer.getIncomeList().get(i).getAmount()%></td>--%>
         </tr>
-        <%i++;}%>
+        <%}%>
     </table>
     <hr/>
 <%--<c:forEach items="${allPayersList}" var="payers">
@@ -69,8 +68,10 @@
             <td>${payers.IncomeList}</td>  </tr>
     </c:forEach>--%>
 
-    <button class="buttons" onclick=""/>
+    <%--<button class="buttons" onclick=""/>--%>
 
 </div>
+</fieldset>
 </body>
+
 </html>

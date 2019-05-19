@@ -14,4 +14,5 @@ public interface JdbcDao {
                              int propertySells, int giftedProperty, int giftedMoney, int declarationDate);
     TaxPayer getPayerWithBiggestRegularIncome();
     List<TaxPayer> getTaxPayersByCondition(String field, int min, int max);
+    List<TaxPayer> getAllTaxPayersFromDB();
 }

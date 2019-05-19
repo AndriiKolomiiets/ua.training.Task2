@@ -10,6 +10,8 @@ public class IncomeImpl implements Income {
         this.incomeType = incomeType;
     }
 
+
+
     @Override
     public void setAmount(int amountOfIncome) {
         incomeValue = amountOfIncome;

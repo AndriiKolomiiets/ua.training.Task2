@@ -22,14 +22,9 @@ import java.util.ResourceBundle;
 public class GetAllPayersServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-       /* long income;
-        double taxes;*/
+
         Locale locale;
         String language;
-/*        int taxId;
-        TaxDeclaration declare = new TaxDeclarationService();
-        TaxPayer payer = new TaxPayer();
-        JdbcDao jdbc = TaxJdbcDao.getInstance();*/
         ResourceBundle resourceBundle;
         AllTaxPayersService allTaxPayersService = new AllTaxPayersService();
         List allPayersList;

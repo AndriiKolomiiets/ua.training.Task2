@@ -2,8 +2,10 @@ package ua.training.task2.model;
 
 import ua.training.task2.model.pojo.TaxPayer;
 import ua.training.task2.model.pojo.income.IncomeImpl;
-import ua.training.task2.model.service.TaxDeclaration;
-import ua.training.task2.model.service.TaxDeclarationService;
+import ua.training.task2.model.service.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -12,7 +14,26 @@ public class Main {
         TaxPayer payer = new TaxPayer();
          JdbcDao jdbc = TaxJdbcDao.getInstance();
 
-        String firstName =("fn");
+        BiggestRegularIncomeService biggestIncomeService = new BiggestRegularIncomeService();
+        TaxPayer taxPayer;
+
+
+        taxPayer = biggestIncomeService.getPayer();
+        System.out.println(taxPayer);
+
+   /*     List<TaxPayer> biggestIncomePayersList = new ArrayList<>();
+        TaxPayersByConditionService taxPayersByConditionService = new TaxPayersByConditionService();
+        int min = 10;
+        int max = 10000000;
+        biggestIncomePayersList = taxPayersByConditionService.getTaxPayersByCondition("regular_job", min, max);
+
+        System.out.println(biggestIncomePayersList);*/
+
+
+/*        AllTaxPayersService service= new AllTaxPayersService();
+         List<TaxPayer> payers = service.getAllPayers();
+        System.out.println(payers);*/
+      /*  String firstName =("fn");
         String lastName = ("ln");
         int taxId = 24152160;
         String taxCategory = "1 category";
@@ -47,7 +68,7 @@ public class Main {
         payer.addIncomeToList(new IncomeImpl(financialAssistanceAmount, "Financial assistance"));
         System.out.println(payer);
         System.out.println(payer.getIncomeValueByType("Regular job income"));
-
+*/
        /* System.out.println(payer.getTaxIdentification().getTaxCategory());
         long income = declare.countEntireIncome(payer);
         double taxes=0.0;
