@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TaxPayer {
-    //todo: User, Work, Property, Identification
     private User user;
     private TaxIdentification taxIdentification;
     private Income income;
@@ -60,14 +59,13 @@ public class TaxPayer {
         this.incomeList.add(income);
     }
 
-
     public int getIncomeValueByType(String type) {
-        for (int i=0; i<incomeList.size();i++){
-            if (incomeList.get(i).getIncomeType()==type){
-               return incomeList.get(i).getAmount();
+        for (int i = 0; i < incomeList.size(); i++) {
+            if (incomeList.get(i).getIncomeType() == type) {
+                return incomeList.get(i).getAmount();
             }
         }
-        return 0;
+        return -1;
 
       /*  return incomeList.stream().filter(a -> type.equals(income.getIncomeType()))
                 .findAny()
@@ -100,21 +98,6 @@ public class TaxPayer {
         return "Tax ID: " + taxIdentification.getTaxId() +
                 "\nTax category: " + taxIdentification.getTaxCategory() +
                 "\nName: " + user.getFirstName() +
-                "\nLast Name: " + user.getLastName() ;
-//                        incomeList.forEach(income ->System.out.println(income));
-
-
-//                "\nPrimary job income: " + incomeList.getPrimaryJobIncomeAmount() +
-//                "\nExtra job income: " + getExtraJobIncomeAmount() +
-//                "\nAnnual bonus: " + getAnnualBonusAmount() +
-//                "\nForeign transactions: " + getForeignMoneyTransactionsAmount() +
-//                "\nMoney got as a gift: " + getMoneyGotAsGiftAmount() +
-//                "\nProperty got as a gift: " + getPropertyGotAsGiftAmount() +
-//                "\nSold property: " + getPropertySalesAmount() +
-//                "\nBenefits: " + getBenefitsAmount() +
-//                "\nFinancial assistance: " + getFinancialAssistanceAmount() +
-//                "\nYear of declaration: " + getDeclarationDate();
-
-
+                "\nLast Name: " + user.getLastName();
     }
 }
