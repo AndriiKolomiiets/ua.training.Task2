@@ -1,20 +1,12 @@
 package ua.training.task2.controller;
 
-import ua.training.task2.model.JdbcDao;
-import ua.training.task2.model.TaxJdbcDao;
-import ua.training.task2.model.pojo.TaxPayer;
 import ua.training.task2.model.service.AllTaxPayersService;
-import ua.training.task2.model.service.TaxDeclaration;
-import ua.training.task2.model.service.TaxDeclarationService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -47,14 +39,11 @@ public class GetAllPayersServlet extends HttpServlet {
             resourceBundle = ResourceBundle.getBundle("message",
                     new Locale("en", "GB"));
         }
-
-
-
         allPayersList = allTaxPayersService.getAllPayers();
         httpServletRequest.setAttribute("allPayersList", allPayersList);
         httpServletResponse.setContentType("text/html;charset=UTF-8");
         httpServletRequest.getRequestDispatcher("/all_tax_payers.jsp").forward(httpServletRequest, httpServletResponse);
 
 
-      }
+    }
 }

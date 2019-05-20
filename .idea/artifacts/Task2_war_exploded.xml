@@ -6,10 +6,10 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="Task2" />
-          <element id="module-output" name="task2" />
+          <element id="module-output" name="Task2" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="task2/web/Web" />
+      <element id="javaee-facet-resources" facet="Task2/web/Web" />
     </root>
   </artifact>
 </component>

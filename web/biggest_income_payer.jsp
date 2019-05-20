@@ -9,7 +9,6 @@
        scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="message"/>
-<% TaxPayer payerWithBiggestIncome = (TaxPayer) session.getAttribute("payerWithBiggestIncome");%>
 
 <link rel="stylesheet" type="text/css" href="styles.css">
 
@@ -34,46 +33,35 @@
     </select></h3>
 </form>
 <br>
-<fieldset>
-    <h1 align="center" style="color:#0000cb"><fmt:message key="alltaxpayers.header"/></h1>
+    <h1 align="center" style="color:#0000cb"><fmt:message key="biggestincome.header"/></h1>
     <br>
     <div align="center">
 
         <table border="1" width="500" align="center">
             <tr bgcolor="00FF7F">
-                <th><b>First Name</b></th>
-                <th><b>Last Name</b></th>
-                <th><b>Tax ID</b></th>
-                <th><b>Tax Category</b></th>
-                <th><b>Income</b></th>
+                <th><b><fmt:message key="table.name"/></b></th>
+                <th><b><fmt:message key="table.lname"/></b></th>
+                <th><b><fmt:message key="table.tid"/></b></th>
+                <th><b><fmt:message key="table.tcategory"/></b></th>
+                <th><b><fmt:message key="table.income"/></b></th>
             </tr>
-
-            <%-- Arranging data in tabular form
-            --%>
+            <%TaxPayer payer =
+                    (TaxPayer) request.getAttribute("payer");
+            %>
             <tr>
-                <td><%=payerWithBiggestIncome.getUser().getFirstName()%>
+                <td><%=payer.getUser().getFirstName()%>
                 </td>
-                <td><%=payerWithBiggestIncome.getUser().getLastName()%>
+                <td><%=payer.getUser().getLastName()%>
                 </td>
-                <td><%=payerWithBiggestIncome.getTaxIdentification().getTaxId()%>
+                <td><%=payer.getTaxIdentification().getTaxId()%>
                 </td>
-                <td><%=payerWithBiggestIncome.getTaxIdentification().getTaxCategory()%>
+                <td><%=payer.getTaxIdentification().getTaxCategory()%>
                 </td>
-                <td><%=payerWithBiggestIncome.getIncomeList().get(0).getAmount()%></td>
+                <td><%=payer.getIncomeList().get(0).getAmount()%></td>
             </tr>
 
         </table>
-        <hr/>
-        <%--<c:forEach items="${allPayersList}" var="payers">
-                <tr>
-                    <td>${payers.User}</td>
-                    <td>${payers.IncomeList}</td>  </tr>
-            </c:forEach>--%>
-
-        <%--<button class="buttons" onclick=""/>--%>
-
     </div>
-</fieldset>
 </body>
 
 </html>

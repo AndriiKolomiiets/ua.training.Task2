@@ -22,16 +22,8 @@ public class SalaryConditionServlet extends HttpServlet {
         ResourceBundle resourceBundle;
         TaxPayersByConditionService taxPayersByConditionService = new TaxPayersByConditionService();
         List payersByConditionsList;
-        /*taxId = Integer.parseInt(httpServletRequest.getParameter("ti"));
-        jdbc.getUserDataFromDb(payer, taxId);
-        income = declare.countEntireIncome(payer);
-        taxes = declare.getTaxes(payer);
-        locale = httpServletRequest.getLocale();
-        language = locale.getLanguage();*/
-
         locale = httpServletRequest.getLocale();
         language = locale.getLanguage();
-
 
 //todo: change language choosing
         if (language.equals("uk")) {
@@ -45,7 +37,7 @@ public class SalaryConditionServlet extends HttpServlet {
         int min = Integer.parseInt(httpServletRequest.getParameter("min"));
         int max = Integer.parseInt(httpServletRequest.getParameter("max"));
         payersByConditionsList = taxPayersByConditionService.getTaxPayersByCondition("regular_job", min, max);
-        if (payersByConditionsList.size()==0){
+        if (payersByConditionsList.size() == 0) {
             httpServletResponse.setContentType("text/html; charset=UTF-8");
             PrintWriter writer = httpServletResponse.getWriter();
             writer.println("<html>" +
@@ -55,11 +47,11 @@ public class SalaryConditionServlet extends HttpServlet {
                     "<body> <h2  align=\"center\">" + resourceBundle.getString("conditions.noelements") + " </h2>" +
                     "<div align=\"center\">" + "</body>" +
                     "</html>");
+        } else {
+            httpServletRequest.setAttribute("payersByConditionsList", payersByConditionsList);
+            httpServletResponse.setContentType("text/html;charset=UTF-8");
+            httpServletRequest.getRequestDispatcher("/tax_payers_by_salary_conditions.jsp").forward(httpServletRequest, httpServletResponse);
         }
-        httpServletRequest.setAttribute("payersByConditionsList", payersByConditionsList);
-        httpServletResponse.setContentType("text/html;charset=UTF-8");
-        httpServletRequest.getRequestDispatcher("/tax_payers_by_salary_conditions.jsp").forward(httpServletRequest, httpServletResponse);
-
 
     }
 }

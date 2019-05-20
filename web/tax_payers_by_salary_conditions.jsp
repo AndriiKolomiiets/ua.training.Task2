@@ -10,7 +10,6 @@
        scope="session"/>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="message"/>
-<% List allPayersList = (List)session.getAttribute("allPayersList");%>
 
 <link rel="stylesheet" type="text/css" href="styles.css">
 
@@ -35,45 +34,43 @@
     </select></h3>
 </form>
 <br>
-<fieldset>
-    <h1 align="center" style="color:#0000cb"><fmt:message key="alltaxpayers.header"/></h1>
-    <br>
-    <div align="center">
+<h1 align="center" style="color:#0000cb"><fmt:message key="taxpayersbycondition.header"/></h1>
+<br>
+<div align="center">
 
-        <table border ="1" width="500" align="center">
-            <tr bgcolor="00FF7F">
-                <th><b>First Name</b></th>
-                <th><b>Last Name</b></th>
-                <th><b>Tax ID</b></th>
-                <th><b>Tax Category</b></th>
-                <th><b>Regular job income</b></th>
-            </tr>
-            <%List<TaxPayer> payers =
-                    (ArrayList<TaxPayer>)request.getAttribute("payersByConditionsList");
-                for(TaxPayer payer:payers){
-                    int i=0;%>
-            <%-- Arranging data in tabular form
-            --%>
-            <tr>
-                <td><%=payer.getUser().getFirstName()%></td>
-                <td><%=payer.getUser().getLastName()%></td>
-                <td><%=payer.getTaxIdentification().getTaxId()%></td>
-                <td><%=payer.getTaxIdentification().getTaxCategory()%></td>
-                 <td><%=payer.getIncomeList().get(i).getAmount()%></td>
-            </tr>
-            <%i++;}%>
-        </table>
-        <hr/>
-        <%--<c:forEach items="${allPayersList}" var="payers">
-                <tr>
-                    <td>${payers.User}</td>
-                    <td>${payers.IncomeList}</td>  </tr>
-            </c:forEach>--%>
+    <table border="1" width="500" align="center">
+        <tr bgcolor="00FF7F">
+            <th><b><fmt:message key="table.name"/></b></th>
+            <th><b><fmt:message key="table.lname"/></b></th>
+            <th><b><fmt:message key="table.tid"/></b></th>
+            <th><b><fmt:message key="table.tcategory"/></b></th>
+            <th><b><fmt:message key="table.income"/></b></th>
+        </tr>
+        <%
+            List<TaxPayer> payers =
+                    (ArrayList<TaxPayer>) request.getAttribute("payersByConditionsList");
+            for (TaxPayer payer : payers) {
+                int i = 0;
+        %>
 
-        <%--<button class="buttons" onclick=""/>--%>
-
-    </div>
-</fieldset>
+        <tr>
+            <td><%=payer.getUser().getFirstName()%>
+            </td>
+            <td><%=payer.getUser().getLastName()%>
+            </td>
+            <td><%=payer.getTaxIdentification().getTaxId()%>
+            </td>
+            <td><%=payer.getTaxIdentification().getTaxCategory()%>
+            </td>
+            <td><%=payer.getIncomeList().get(i).getAmount()%>
+            </td>
+        </tr>
+        <%
+                i++;
+            }
+        %>
+    </table>
+</div>
 </body>
 
 </html>

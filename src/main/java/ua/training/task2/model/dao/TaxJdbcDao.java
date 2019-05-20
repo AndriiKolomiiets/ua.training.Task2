@@ -1,4 +1,4 @@
-package ua.training.task2.model;
+package ua.training.task2.model.dao;
 
 import ua.training.task2.model.pojo.*;
 import ua.training.task2.model.pojo.income.*;
@@ -154,19 +154,13 @@ public class TaxJdbcDao implements JdbcDao {
         try {
             connection = connectToDb();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT DISTINCT MAX(regular_job), fname, lname, taxid, tcategory " +
-                    "FROM user_info INNER JOIN declaration d on user_info.taxid = d.tax_id");
-
-
-
-
-
-
+            ResultSet rs = statement.executeQuery("SELECT DISTINCT regular_job, fname, lname, taxid, tcategory, tax_id FROM user_info INNER JOIN" +
+                    " declaration ON tax_id = taxid WHERE regular_job = (SELECT MAX(regular_job) FROM declaration)");
 
             while (rs.next()) {
-                System.out.println(rs.getString(rs.getString("fname") + " "+ rs.getString("lname"))
+              /*  System.out.println(rs.getString("fname") + " "+ rs.getString("lname")
                         + " " +rs.getInt("taxid") + " " + rs.getString("tcategory")+ " "
-                        +rs.getInt("regular_job"));
+                        +rs.getInt("regular_job"));*/
                 return new TaxPayer(
                         new UserImpl(rs.getString("fname"), rs.getString("lname")),
                         new TaxIdentificationImpl(rs.getInt("taxid"), rs.getString("tcategory")),

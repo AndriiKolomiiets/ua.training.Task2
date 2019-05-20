@@ -1,7 +1,7 @@
 package ua.training.task2.controller;
 
-import ua.training.task2.model.JdbcDao;
-import ua.training.task2.model.TaxJdbcDao;
+import ua.training.task2.model.dao.JdbcDao;
+import ua.training.task2.model.dao.TaxJdbcDao;
 import ua.training.task2.model.pojo.TaxPayer;
 import ua.training.task2.model.pojo.income.IncomeImpl;
 import ua.training.task2.model.service.TaxDeclaration;

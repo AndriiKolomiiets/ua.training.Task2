@@ -19,15 +19,9 @@ public class BiggestIncomeServlet extends HttpServlet {
 
         BiggestRegularIncomeService biggestIncomeService = new BiggestRegularIncomeService();
         TaxPayer taxPayer;
-        /*taxId = Integer.parseInt(httpServletRequest.getParameter("ti"));
-        jdbc.getUserDataFromDb(payer, taxId);
-        income = declare.countEntireIncome(payer);
-        taxes = declare.getTaxes(payer);
-        locale = httpServletRequest.getLocale();
-        language = locale.getLanguage();*/
-
         taxPayer = biggestIncomeService.getPayer();
-        httpServletRequest.setAttribute("payerWithBiggestIncome", taxPayer);
+
+        httpServletRequest.setAttribute("payer", taxPayer);
         httpServletResponse.setContentType("text/html;charset=UTF-8");
         httpServletRequest.getRequestDispatcher("/biggest_income_payer.jsp").forward(httpServletRequest, httpServletResponse);
 

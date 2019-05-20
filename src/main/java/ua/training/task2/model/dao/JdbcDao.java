@@ -1,4 +1,4 @@
-package ua.training.task2.model;
+package ua.training.task2.model.dao;
 
 import ua.training.task2.model.pojo.TaxPayer;
 

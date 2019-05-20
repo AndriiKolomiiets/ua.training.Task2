@@ -82,8 +82,8 @@
             var min = document.forms["condition_form"]["min"].value;
             var max = document.forms["condition_form"]["max"].value;
             if (min > max) {
-                //todo: <%--<fmt:message key="admin.validation.message"/>--%>
-                alert(" no no no");
+
+                alert("<fmt:message key="admin.validation.message"/>");
                 return false;
             }
         }  </script>
