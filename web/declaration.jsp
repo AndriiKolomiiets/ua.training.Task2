@@ -32,7 +32,7 @@
 
     <div align="center">
         <fieldset class="flex-container" style="width: 600px; height: 620px;">
-            <form id="declaration_fill" action="/TaxDeclaration/">
+            <form id="declaration_fill" action="/TaxDeclaration/" onsubmit="return validateForm()">
                 <br>
                 <fmt:message key="declaration.firstName"/>
                 <input type="text" name="fn" pattern="([A-Z]{1})([a-z ]{1,14})"><br>
@@ -84,5 +84,81 @@
             </form>
         </fieldset>
     </div>
+
+<script> function validateForm() {
+    var fname = document.forms["declaration_fill"]["fn"].value;
+    var lname = document.forms["declaration_fill"]["ln"].value;
+    var taxId = document.forms["declaration_fill"]["ti"].value;
+    var taxCat = document.forms["declaration_fill"]["tc"].value;
+    var rJob = document.forms["declaration_fill"]["rJob"].value;
+    var eJob = document.forms["declaration_fill"]["eJob"].value;
+    var annBonus = document.forms["declaration_fill"]["aBonus"].value;
+    var benefits = document.forms["declaration_fill"]["benefits"].value;
+    var finAssist = document.forms["declaration_fill"]["finAssist"].value;
+    var transactions = document.forms["declaration_fill"]["transactions"].value;
+    var propSale = document.forms["declaration_fill"]["propSale"].value;
+    var giftMoney = document.forms["declaration_fill"]["giftMoney"].value;
+    var giftProp = document.forms["declaration_fill"]["giftProp"].value;
+    var decDate = document.forms["declaration_fill"]["decDate"].value;
+    if (fname === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (lname === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (taxId === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+
+    if (taxCat === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (rJob === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (eJob === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (annBonus === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (benefits === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (finAssist === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (transactions === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (propSale === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (giftMoney === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (giftProp === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    if (decDate === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+
+    return true;
+}  </script>
 </body>
 </html>

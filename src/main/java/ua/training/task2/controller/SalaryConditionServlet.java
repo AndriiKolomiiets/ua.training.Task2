@@ -24,6 +24,8 @@ public class SalaryConditionServlet extends HttpServlet {
         List payersByConditionsList;
         locale = httpServletRequest.getLocale();
         language = locale.getLanguage();
+        int min;
+        int max;
 
 //todo: change language choosing
         if (language.equals("uk")) {
@@ -34,9 +36,12 @@ public class SalaryConditionServlet extends HttpServlet {
                     new Locale("en", "GB"));
         }
 
-        int min = Integer.parseInt(httpServletRequest.getParameter("min"));
-        int max = Integer.parseInt(httpServletRequest.getParameter("max"));
-        payersByConditionsList = taxPayersByConditionService.getTaxPayersByCondition("regular_job", min, max);
+        if (httpServletRequest.getParameter("min") == null) {
+            httpServletRequest.getRequestDispatcher("/admin.jsp").forward(httpServletRequest, httpServletResponse);
+        }
+        min = Integer.parseInt(httpServletRequest.getParameter("min"));
+        max = Integer.parseInt(httpServletRequest.getParameter("max"));
+        payersByConditionsList = taxPayersByConditionService.getTaxPayersByCondition(min, max);
         if (payersByConditionsList.size() == 0) {
             httpServletResponse.setContentType("text/html; charset=UTF-8");
             PrintWriter writer = httpServletResponse.getWriter();

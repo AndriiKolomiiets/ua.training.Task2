@@ -6,7 +6,6 @@
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="Task2" />
-          <element id="module-output" name="Task2" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="Task2/web/Web" />

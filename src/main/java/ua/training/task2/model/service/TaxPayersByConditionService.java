@@ -7,8 +7,8 @@ import ua.training.task2.model.pojo.TaxPayer;
 import java.util.List;
 
 public class TaxPayersByConditionService {
-    public List<TaxPayer> getTaxPayersByCondition (String field, int min, int max) {
+    public List<TaxPayer> getTaxPayersByCondition (int min, int max) {
         JdbcDao jdbcDao = TaxJdbcDao.getInstance();
-        return jdbcDao.getTaxPayersByCondition(field,min,max);
+        return jdbcDao.getTaxPayersByCondition(min,max);
     }
 }

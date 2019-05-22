@@ -20,18 +20,9 @@ public class GetAllPayersServlet extends HttpServlet {
         ResourceBundle resourceBundle;
         AllTaxPayersService allTaxPayersService = new AllTaxPayersService();
         List allPayersList;
-        /*taxId = Integer.parseInt(httpServletRequest.getParameter("ti"));
-        jdbc.getUserDataFromDb(payer, taxId);
-        income = declare.countEntireIncome(payer);
-        taxes = declare.getTaxes(payer);
-        locale = httpServletRequest.getLocale();
-        language = locale.getLanguage();*/
-
         locale = httpServletRequest.getLocale();
         language = locale.getLanguage();
 
-
-//todo: change language choosing
         if (language.equals("uk")) {
             resourceBundle = ResourceBundle.getBundle("message_uk_UA",
                     new Locale("uk", "UA"));
@@ -43,7 +34,5 @@ public class GetAllPayersServlet extends HttpServlet {
         httpServletRequest.setAttribute("allPayersList", allPayersList);
         httpServletResponse.setContentType("text/html;charset=UTF-8");
         httpServletRequest.getRequestDispatcher("/all_tax_payers.jsp").forward(httpServletRequest, httpServletResponse);
-
-
     }
 }

@@ -16,7 +16,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class ViewTaxDeclarationServlet extends HttpServlet {
-    //todo: sort, find, sum
+
     public void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         long income;
         double taxes;

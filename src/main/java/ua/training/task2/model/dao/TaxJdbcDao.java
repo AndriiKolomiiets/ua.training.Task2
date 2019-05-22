@@ -13,7 +13,7 @@ public class TaxJdbcDao implements JdbcDao {
     private static Connection connection;
     private static PreparedStatement preparedStatement;
     private static volatile TaxJdbcDao taxJdbc = null;
-    private ResourceBundle resourceBundle = ResourceBundle.getBundle("message",
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle("sql_queries",
             new Locale("en", "GB"));
 
     private TaxJdbcDao() {
@@ -45,16 +45,13 @@ public class TaxJdbcDao implements JdbcDao {
         return connection;
     }
 
-    //todo: null check
     public TaxPayer getUserDataFromDb(TaxPayer taxPayer, int taxId) {
         try {
             connection = connectToDb();
-            Statement statement = connection.createStatement();
-
-            ResultSet rs = statement.executeQuery("SELECT taxid, tax_id, fname, lname, tcategory," +
-                    "regular_job, extra_job, annual_bonus, benefits, financial_assistance, foreign_transaction," +
-                    "property_sells, gifted_property, gifted_money, declaration_date, creation_date " +
-                    "FROM user_info, declaration WHERE taxid=" + taxId + " AND tax_id=" + taxId);
+            PreparedStatement preparedStatement = connection.prepareStatement(resourceBundle.getString("select.records.by.tax.id"));
+            preparedStatement.setInt(1, taxId);
+            preparedStatement.setInt(2, taxId);
+            ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()) {
                 taxPayer.getTaxIdentification().setTaxId(rs.getInt("taxid"));
@@ -83,7 +80,7 @@ public class TaxJdbcDao implements JdbcDao {
         try {
             connection = connectToDb();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT DISTINCT taxid FROM user_info");
+            ResultSet rs = statement.executeQuery(resourceBundle.getString("select.unique.tax.id.from.user.info"));
             while (rs.next()) {
                 taxIds.add(rs.getInt("taxid"));
             }
@@ -99,7 +96,7 @@ public class TaxJdbcDao implements JdbcDao {
         try {
             connection = connectToDb();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT DISTINCT fname, lname, taxid, tcategory FROM user_info, declaration");
+            ResultSet rs = statement.executeQuery(resourceBundle.getString("select.unique.user.and.tax.info"));
             payers = getTaxPayerAndAddToList(payers, rs);
             System.out.println(payers);
 
@@ -112,27 +109,22 @@ public class TaxJdbcDao implements JdbcDao {
         return payers;
     }
 
-    public List<TaxPayer> getTaxPayersByCondition(String field, int min, int max) {
+    public List<TaxPayer> getTaxPayersByCondition(int min, int max) {
         List<TaxPayer> payers = new ArrayList<>();
         try {
             connection = connectToDb();
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT DISTINCT fname, lname, taxid, tcategory, regular_job " +
-                    "FROM user_info INNER JOIN declaration d on user_info.taxid = d.tax_id WHERE " + field + " BETWEEN " + min + " AND " + max);
+            PreparedStatement preparedStatement = connection.prepareStatement(resourceBundle.getString("select.income.by.range"));
+            preparedStatement.setInt(1, min);
+            preparedStatement.setInt(2, max);
+            System.out.println(preparedStatement);
+            ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                System.out.println( rs.getString("fname")+" " +rs.getString("lname")
-                        +  " " + rs.getInt("taxid")+" " +rs.getString("tcategory")+" "+rs.getInt("regular_job")  );
                 payers.add(new TaxPayer(
                         new UserImpl(rs.getString("fname"), rs.getString("lname")),
                         new TaxIdentificationImpl(rs.getInt("taxid"), rs.getString("tcategory")),
-                        new IncomeImpl(rs.getInt("regular_job"), field)));
-
+                        new IncomeImpl(rs.getInt("regular_job"), "Regular job income")));
             }
-            System.out.println(payers);
-        } catch (
-                SQLException e)
-
-        {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return payers;
@@ -154,21 +146,16 @@ public class TaxJdbcDao implements JdbcDao {
         try {
             connection = connectToDb();
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT DISTINCT regular_job, fname, lname, taxid, tcategory, tax_id FROM user_info INNER JOIN" +
-                    " declaration ON tax_id = taxid WHERE regular_job = (SELECT MAX(regular_job) FROM declaration)");
+            ResultSet rs = statement.executeQuery(resourceBundle.getString("select.unique.max.income.payer"));
 
             while (rs.next()) {
-              /*  System.out.println(rs.getString("fname") + " "+ rs.getString("lname")
-                        + " " +rs.getInt("taxid") + " " + rs.getString("tcategory")+ " "
-                        +rs.getInt("regular_job"));*/
                 return new TaxPayer(
                         new UserImpl(rs.getString("fname"), rs.getString("lname")),
                         new TaxIdentificationImpl(rs.getInt("taxid"), rs.getString("tcategory")),
                         new IncomeImpl(rs.getInt("regular_job"), "regular_job"));
             }
         } catch (
-                SQLException e)
-        {
+                SQLException e) {
             System.out.println(e.getMessage());
         }
         return taxPayer;
@@ -186,7 +173,7 @@ public class TaxJdbcDao implements JdbcDao {
         }
         try {
             preparedStatement = connection.prepareStatement(
-                    resourceBundle.getString("jdbc.db.insertDeclarationIntoDB"));
+                    resourceBundle.getString("insert.declaration.into.db"));
             preparedStatement.setInt(1, taxId);
             preparedStatement.setString(2, firstName);
             preparedStatement.setString(3, lastName);
@@ -195,7 +182,7 @@ public class TaxJdbcDao implements JdbcDao {
             preparedStatement.executeBatch();
 
             preparedStatement = connection.prepareStatement(
-                    resourceBundle.getString("jdbc.db.insertUserIntoDB"));
+                    resourceBundle.getString("insert.user.into.db"));
             preparedStatement.setInt(1, taxId);
             preparedStatement.setInt(2, regularJob);
             preparedStatement.setInt(3, extraJob);
@@ -206,7 +193,6 @@ public class TaxJdbcDao implements JdbcDao {
             preparedStatement.setInt(8, propertySells);
             preparedStatement.setInt(9, giftedProperty);
             preparedStatement.setInt(10, giftedMoney);
-//            preparedStatement.setInt(11, declarationDate);
             preparedStatement.setDate(11, new Date(System.currentTimeMillis()));
             preparedStatement.addBatch();
             preparedStatement.executeBatch();

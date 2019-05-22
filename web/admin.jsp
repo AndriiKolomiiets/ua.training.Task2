@@ -64,8 +64,8 @@
 <div align="center">
     <fieldset class="flex-container" style="width: 600px; height: 180px;">
 
-        <form name="condition_form" class="admin_form" action="http://localhost:8080/salary_condition_servlet/"
-              onsubmit="return validateForm()">
+        <form name="conditionForm" class="admin_form" action="http://localhost:8080/salary_condition_servlet/"
+              onsubmit=" return validateForm()">
             <h3><fmt:message key="admin.payersbycondition"/></h3>
             <br>
             <fmt:message key="admin.conditions.min"/>
@@ -74,22 +74,32 @@
             <input type="number" name="max" pattern="[0-9]{1,8}"/><br>
             <br>
             <div align="center">
-                <input type="submit" class="sub_button" value=<fmt:message key="check.submitButton"/>>
+                <input type="submit" onclick="return validateForm()" class="sub_button" value=<fmt:message
+                        key="check.submitButton"/>>
                 <input type="reset" class="sub_button" value=<fmt:message key="check.refreshButton"/>>
             </div>
         </form>
-        <script>function validateForm() {
-            var min = document.forms["condition_form"]["min"].value;
-            var max = document.forms["condition_form"]["max"].value;
+        <script> function validateForm() {
+            var min = document.forms["conditionForm"]["min"].value;
+            var max = document.forms["conditionForm"]["max"].value;
+            if (min === "") {
+                window.alert("<fmt:message key="admin.min.validation.message"/>");
+                // min.focus();
+                return false;
+            }
+            if (max === "") {
+                window.alert("<fmt:message key="admin.max.validation.message"/>");
+                // max.focus();
+                return false;
+            }
             if (min > max) {
-
                 alert("<fmt:message key="admin.validation.message"/>");
                 return false;
             }
+            return true;
         }  </script>
 
     </fieldset>
 </div>
 </body>
-
 </html>

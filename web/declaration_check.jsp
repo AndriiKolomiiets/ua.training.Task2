@@ -34,7 +34,7 @@
 <br>
 <br>
 <div align="center">
-    <form id="declaration_fill" action="/ViewTaxDeclarationServlet/">
+    <form id="declaration_fill" action="/ViewTaxDeclarationServlet/" onsubmit="return validateForm()">
         <fmt:message key="declaration.taxId"/>
         <input type="text" name="ti" pattern="[0-9]{8}"/><br>
         <br>
@@ -44,5 +44,14 @@
         </div>
     </form>
 </div>
+
+<script> function validateForm() {
+    var taxId = document.forms["declaration_fill"]["ti"].value;
+    if (taxId === "") {
+        window.alert("<fmt:message key="admin.general.validation.message"/>");
+        return false;
+    }
+    return true;
+}  </script>
 </body>
 </html>
